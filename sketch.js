@@ -90,25 +90,14 @@ function drawCirclesOnLine(x1, y1, x2, y2, allCircles) {
         }
       }
     }
-    
+   
+
     if (!overlapping) {
       // Compute angle of the line
       let lineAngle = atan2(dy, dx);
       
-      // decide the color of the half-circles randomly
-      let isRedFirst = random() > 0.5;
-      let color1 = isRedFirst ? [232, 80, 78] : [120, 161, 100]; // 红色或绿色
-      let color2 = isRedFirst ? [120, 161, 100] : [232, 80, 78]; // 绿色或红色
-      
-      // draw the half circle
-      fill(color1[0], color1[1], color1[2]);
-      noStroke();
-      arc(cx, cy, r * 2, r * 2, lineAngle, lineAngle + PI);
-      
-      // draw another half circle
-      fill(color2[0], color2[1], color2[2]);
-      noStroke();
-      arc(cx, cy, r * 2, r * 2, lineAngle + PI, lineAngle + 2*PI);
+      // Draw the apple (circle with two colored halves)
+      drawApple(cx, cy, r, lineAngle);
       
       // add the circle to the current line's circles
       let circle = {x: cx, y: cy, r: r};
@@ -119,6 +108,24 @@ function drawCirclesOnLine(x1, y1, x2, y2, allCircles) {
     // move the position forward
     pos += r * 2 - 2; // reduce by 2 to avoid overlap
   }
+}
+
+// Draw an apple (circle with two colored halves)
+function drawApple(x, y, radius, lineAngle) {
+  // decide the color of the half-circles randomly
+  let isRedFirst = random() > 0.5;
+  let color1 = isRedFirst ? [232, 80, 78] : [120, 161, 100]; // red or green
+  let color2 = isRedFirst ? [120, 161, 100] : [232, 80, 78]; // green or red
+  
+  // draw the first half circle
+  fill(color1[0], color1[1], color1[2]);
+  noStroke();
+  arc(x, y, radius * 2, radius * 2, lineAngle, lineAngle + PI);
+  
+  // draw the second half circle
+  fill(color2[0], color2[1], color2[2]);
+  noStroke();
+  arc(x, y, radius * 2, radius * 2, lineAngle + PI, lineAngle + 2*PI);
 }
 
 // check if the point is near an intersection
